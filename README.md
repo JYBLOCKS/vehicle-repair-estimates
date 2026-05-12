@@ -39,3 +39,13 @@ cd client
 npm install
 npm run dev
 ```
+
+## AWS Deployment Outline
+
+- Backend runtime: deploy FastAPI as either ECS Fargate service (containerized, long-running API) or Lambda behind API Gateway (serverless, bursty traffic).
+- Frontend hosting: build `client` and publish static assets to S3, then serve globally through CloudFront with HTTPS and cache policies.
+- Database: use Amazon RDS (PostgreSQL recommended for production) in private subnets with automated backups and Multi-AZ if higher availability is required.
+- Networking: place compute in VPC private subnets; expose only the load balancer/API Gateway and CloudFront to the internet.
+- IAM: apply least-privilege roles for CI runner, ECS tasks/Lambda execution role, and deployment automation; avoid long-lived access keys.
+- Secrets: store DB credentials, JWT keys, and API secrets in AWS Secrets Manager (or SSM Parameter Store) and inject at runtime.
+- CI/CD: use GitHub Actions to run `pytest`, `npm test`, `npm run lint`, `npm run build`, then deploy via IaC (Terraform/CloudFormation/CDK) with separate dev/staging/prod environments.
