@@ -4,6 +4,7 @@ uvicorn[standard]>=0.30
 
 # ORM and async database drivers (SQLite + Postgres)
 SQLAlchemy>=2.0
+greenlet>=3.0
 aiosqlite>=0.19 # Async SQLite driver (great for local dev)
 typing_extensions
 

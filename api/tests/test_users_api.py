@@ -10,8 +10,8 @@ from app.main import app
 async def test_create_and_get_user():
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
-        email = f"{uuid.uuid4().hex[:8]}@j.com"
-        r = await ac.post("/users", json={"email": email, "name": "Jose"})
+        email = f"{uuid.uuid4().hex[:8]}@example.com"
+        r = await ac.post("/users", json={"email": email, "name": "Jose Arredondo", "password": "password"})
         assert r.status_code == 201
         user = r.json()
         gid = user["id"]
