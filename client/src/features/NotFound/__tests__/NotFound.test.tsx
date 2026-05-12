@@ -1,3 +1,4 @@
+import React from "react";
 import { render, screen } from "../../../utils/test-utils";
 import NotFound from "../";
 import { describe, test, expect } from "vitest";

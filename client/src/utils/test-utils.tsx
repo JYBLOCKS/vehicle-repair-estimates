@@ -1,5 +1,5 @@
+import React, { type ReactNode } from "react";
 import { queries, render, type RenderOptions } from "@testing-library/react";
-import type { ReactNode } from "react";
 //styles
 import { theme } from "../themes/theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
