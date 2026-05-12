@@ -17,5 +17,15 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    rules: {
+      // Keep no-unused-vars strict, but avoid false positives for JSX component symbols.
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z]' }],
+    },
+  },
+  {
+    files: ['vite.config.js'],
+    languageOptions: {
+      globals: globals.node,
+    },
   },
 ])
