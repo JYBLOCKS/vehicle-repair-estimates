@@ -1,0 +1,35 @@
+name: Backend CI
+on:
+  push:
+    paths:
+      - "api/**"
+      - ".github/workflows/backend-ci.yml"
+  pull_request:
+    paths:
+      - "api/**"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: api/requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        env:
+          SECRET_KEY: dev-secret-key-change-me
+          ENV: dev
+          DATABASE_URL: sqlite+aiosqlite:///./data/data.db
+          ALGORITHM: HS256
+          ACCESS_TOKEN_EXPIRE_MINUTES: 3000000000
+          REFRESH_TOKEN_EXPIRE_DAYS: 7
+        run: pytest -q

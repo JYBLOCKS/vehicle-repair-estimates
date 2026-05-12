@@ -1,0 +1,30 @@
+name: Frontend CI
+on:
+  push:
+    paths:
+      - "client/**"
+      - ".github/workflows/frontend-ci.yml"
+  pull_request:
+    paths:
+      - "client/**"
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install
+        run: npm install
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        env:
+          VITE_API_URL: http://localhost:8000
+        run: npm run build
+      - name: Test
+        run: npm run test
